@@ -1,17 +1,33 @@
 pipeline {
-    agent any
 
-    stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
+ agent any
 
-        stage('Build') {
-            steps {
-                sh 'mvn clean package -DskipTests'
-            }
-        }
-    }
+ tools {jdk 'JAVA_HOME’, maven 'M2_HOME'}
+
+ stages {
+
+ stage('GIT') {
+
+           steps {
+
+               git branch: 'master',
+
+               url: ' https://github.com/hwafa/timesheetproject.git'
+
+          }
+
+     }
+
+ stage ('Compile Stage') {
+
+ steps {
+
+ sh 'mvn clean compile'
+
+ }
+
+ }
+
+ }
+
 }
